@@ -11,19 +11,24 @@
 <form action="#" method="POST" >
 <fieldset style="width:90%;margin:10px auto;padding:10px;">
 <legend>optionSet</legend>
-<?php echo changeToUtf('1.来源网站  2.关键字');?>
+<?php echo changeToUtf('1.来源网站  2.关键字  3.页码');?>
 <input type="reset"/> <input type="submit">
 </fieldset>
 
 </form>
 
-<div style="padding:10px;margin:0 auto;width:90%;border:1px solid #000;">
-	<h2><?php echo changeToUtf($keyWord[0]); ?></h2>
-	<ul>
 		<?php
-			readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord,$page);
+			/*按照关键词不同分类输出结果*/
+			for($length=0;$length<count($keyWord);$length++){
+				echo '<div id="search_'.($length+1).'" style="border-radius:10px 10px;box-shadow:3px 3px 3px black;padding:10px;margin:20px auto;width:90%;border:1px solid #000;">';
+					echo '<ul>';
+						echo '<h2>'.changeToUtf($keyWord[$length]).'</h2>';
+						readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord[$length],$page);
+					echo '</ul>';
+				echo '</div>';
+
+			}
 		?> 
-	</ul>
-</div>
+
 </body>
 </html>

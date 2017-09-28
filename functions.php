@@ -5,7 +5,7 @@
 function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord,$page){	
 	for($sourceNumber=0;$sourceNumber<count($sourceWeb);$sourceNumber++){
 		if($page[$sourceNumber]===1){   //只读取一页
-			outputLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord[$sourceNumber]);
+			outputLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 		}
 		else{						  //读取多页
 			for($pageNumber=0;$pageNumber<$page[$sourceNumber];$pageNumber++){
@@ -15,19 +15,10 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 				else{
 					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$sourceWebIndexName[$sourceNumber].'_'.$pageNumber.'.'.$sourceWebIndexFormat[$sourceNumber];
 				}
-				outputLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord[$sourceNumber]);
+				outputLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 			}
 		}
 	}
-		//outputLink($webName[0],$sourceWeb[0],$cutSource[0],$keyWord);
-		//outputLink($webName[1],$sourceWeb[1],$cutSource[1],$keyWord);
-		/*
-		$html1 = file_get_contents($sourceWeb[1]);
-		$html1 = changeToUtf($html1);
-		preg_match_all($cutSource[1],$html1,$result);
-		//var_dump($result);
-		echo $result[0][0];*/
-
 }
 
 /*输出获取的指定信息*/
@@ -60,9 +51,12 @@ function outputLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 			$link = get_tag_link($result[0][$j],'a','href');
 			$linkDate = get_tag_date($result[0][$j]);
 			
-			print '<li style="list-style-type:decimal;border-bottom:1px dashed #eee;">'.'<span>'.$linkDate[0].'</span>&nbsp;&nbsp;'.'<a href="'.$sourceWebRoot.$link[0].'" target="_blank" title="'.$title[0].'">'.$title[0].'</a>'.'&nbsp;&nbsp;('.changeToUtf($webName.'发布').')'.'</li>'; 
+			$printInfo = '<li style="list-style-type:decimal;border-bottom:1px dashed #eee;">'.'<span id="date">'.$linkDate[0].'</span>&nbsp;&nbsp;'.'<a href="'.$sourceWebRoot.$link[0].'" target="_blank" title="'.$title[0].'">'.$title[0].'</a>'.'&nbsp;&nbsp;('.changeToUtf($webName.'发布').')'.'</li>'; 
+
+			$sortAll[$j] = array($linkDate[0]=>$printInfo);			
 		}	
     }
+	
 }
 
 /*转换中文编码格式为UTF-8*/
