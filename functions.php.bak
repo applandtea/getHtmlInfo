@@ -5,7 +5,7 @@
 function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord,$page){	
 	for($sourceNumber=0;$sourceNumber<count($sourceWeb);$sourceNumber++){
 		if($page[$sourceNumber]===1){   //只读取一页
-			outputLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
+			selectLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 		}
 		else{						  //读取多页
 			for($pageNumber=0;$pageNumber<$page[$sourceNumber];$pageNumber++){
@@ -15,15 +15,14 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 				else{
 					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$sourceWebIndexName[$sourceNumber].'_'.$pageNumber.'.'.$sourceWebIndexFormat[$sourceNumber];
 				}
-				outputLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
+				selectLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 			}
 		}
 	}
-
 }
 
-/*输出获取的指定信息*/
-function outputLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
+/*筛选指定信息，一个源网站调用一次，多页多次调用*/
+function selectLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 	/*获取原网址源文件*/
 	$ch = curl_init();  
 	$timeout = 10; // set to zero for no timeout  
@@ -53,12 +52,29 @@ function outputLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 			$linkDate = get_tag_date($result[0][$j]);
 			
 			$printInfo = '<li style="list-style-type:decimal;border-bottom:1px dashed #eee;">'.'<span id="date">'.$linkDate[0].'</span>&nbsp;&nbsp;'.'<a href="'.$sourceWebRoot.$link[0].'" target="_blank" title="'.$title[0].'">'.$title[0].'</a>'.'&nbsp;&nbsp;('.changeToUtf($webName.'发布').')'.'</li>'; 
-
-			$sortAll[$j] = array($linkDate[0]=>$printInfo);			
+			
+			global $linkCode;
+			global $counter;
+			$linkCode[$linkDate[0]] = $printInfo;
+			$counter ++;
 		}	
     }
 	
 }
+
+/*对筛选后的信息排序并输出*/
+function sortLink(){
+	global $linkCode;
+	global $counter;
+	krsort($linkCode);
+	//var_dump($linkCode);
+	foreach($linkCode as $key=>$html){
+		
+	}
+	$counter = 0;
+	unset($linkCode);
+}
+
 
 /*转换中文编码格式为UTF-8*/
 function changeToUtf($sourceString){

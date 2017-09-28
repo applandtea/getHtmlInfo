@@ -24,6 +24,7 @@
 					echo '<ul>';
 						echo '<h2>'.changeToUtf($keyWord[$length]).'</h2>';
 						readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord[$length],$page);
+						sortLink();
 					echo '</ul>';
 				echo '</div>';
 
