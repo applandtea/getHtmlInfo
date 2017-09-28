@@ -1,3 +1,4 @@
+<?php include 'init.php';?>
 <?php
 
 
@@ -7,7 +8,7 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 		if($page[$sourceNumber]===1){   //只读取一页
 			selectLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 		}
-		else{						  //读取多页
+		else if($page[$sourceNumber]>1){						  //读取多页
 			for($pageNumber=0;$pageNumber<$page[$sourceNumber];$pageNumber++){
 				if($pageNumber===0){
 					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$sourceWebIndexName[$sourceNumber].'.'.$sourceWebIndexFormat[$sourceNumber];
@@ -55,8 +56,10 @@ function selectLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 			
 			global $linkCode;
 			global $counter;
-			$linkCode[$linkDate[0]] = $printInfo;
-			$counter ++;
+			if($title[0]!=changeToUtf('通知公告')){
+				$linkCode[$linkDate[0]] = $printInfo;
+				$counter ++;
+			}
 		}	
     }
 	

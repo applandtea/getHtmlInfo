@@ -20,11 +20,20 @@
 		<?php
 			/*按照关键词不同分类输出结果*/
 			for($length=0;$length<count($keyWord);$length++){
-				echo '<div id="search_'.($length+1).'" style="border-radius:10px 10px;box-shadow:3px 3px 3px black;padding:10px;margin:20px auto;width:90%;border:1px solid #000;">';
+				echo '<div id="comment_'.($length+1).'" style="border-radius:10px 10px;box-shadow:3px 3px 3px black;padding:10px;margin:20px auto;width:90%;border:1px solid #000;">';
 					echo '<ul>';
 						echo '<h2>'.changeToUtf($keyWord[$length]).'</h2>';
 						readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord[$length],$page);
-						sortLink();
+						//sortLink();
+						global $linkCode;
+						global $counter;
+						echo $counter;
+						krsort($linkCode);
+						foreach($linkCode as $key=>$code){
+							echo $code;
+						}
+						$counter = 0;
+						unset($linkCode);
 					echo '</ul>';
 				echo '</div>';
 

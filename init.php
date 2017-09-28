@@ -10,9 +10,9 @@
 	$webName[2] = '市人社局';
 	
 	/*源网址读取页数*/
-	$page[0] = 1;
+	$page[0] = 2;
 	$page[1] = 1;
-	$page[2] = 3;
+	$page[2] = 1;
 
 	/*源网址*/
 	$sourceWeb[0] = 'http://www.czs.gov.cn/html/dtxx/tzgg/default.htm'; /*市政府门户*/
@@ -51,6 +51,7 @@
 	/*关键词*/
 	$keyWord[0] = '普通话';
 	$keyWord[1] = '招聘';
+	$keyWord[2] = '遴选';
 
 	
 
