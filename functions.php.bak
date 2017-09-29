@@ -7,6 +7,7 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 	for($sourceNumber=0;$sourceNumber<count($sourceWeb);$sourceNumber++){
 		if($page[$sourceNumber]===1){   //只读取一页
 			selectLink($webName[$sourceNumber],$sourceWeb[$sourceNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
+			echo $sourceWeb[$sourceNumber];
 		}
 		else if($page[$sourceNumber]>1){						  //读取多页
 			for($pageNumber=0;$pageNumber<$page[$sourceNumber];$pageNumber++){
@@ -56,28 +57,24 @@ function selectLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 			
 			global $linkCode;
 			global $counter;
-			if($title[0]!=changeToUtf('通知公告')){
+			//if($title[0]!=changeToUtf('通知公告')){
 				$linkCode[$linkDate[0]] = $printInfo;
 				$counter ++;
-			}
+			//}
 		}	
     }
 	
 }
 
 /*对筛选后的信息排序并输出*/
-function sortLink(){
-	global $linkCode;
-	global $counter;
-	echo $counter."<br/>";
-	var_dump($linkCode);
+function sortLink($linkCode,$counter){
 	krsort($linkCode);
-	//var_dump($linkCode);
+	//print_r($linkCode);
 	foreach($linkCode as $key=>$code){
 		echo $code;
 	}
 	$counter = 0;
-	unset($linkCode);
+	$linkCode=array();
 }
 
 
@@ -96,14 +93,14 @@ function changeToUtf($sourceString){
 
 /*截取筛选后内容中的链接文字*/
 function get_tag_title($result,$tag){
-	$regex = "/<$tag.*?>(.*?)<\/$tag>/is";
+	$regex = "/<".$tag.".*?>(.*?)<\/".$tag.">/is";
 	preg_match_all($regex,$result,$matches,PREG_PATTERN_ORDER);
 	return $matches[1];
 }
 
 /*截取筛选后内容中的链接地址*/
 function get_tag_link($result,$tag,$attr){
-	$regex = "/<$tag\s$attr=\'(.*?)\'.*?>.*?<\/$tag>/is";
+	$regex = "/<".$tag."\s".$attr."=\'(.*?)\'.*?>.*?<\/".$tag.">/is";
 	preg_match_all($regex,$result,$matches,PREG_PATTERN_ORDER);
 	return $matches[1];
 }

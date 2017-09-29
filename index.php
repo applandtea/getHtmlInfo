@@ -24,10 +24,9 @@
 					echo '<ul>';
 						echo '<h2>'.changeToUtf($keyWord[$length]).'</h2>';
 						readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$sourceWebIndexFormat,$cutSource,$keyWord[$length],$page);
-						//sortLink();
 						global $linkCode;
 						global $counter;
-						echo $counter;
+						//sortLink($linkCode,$counter);
 						krsort($linkCode);
 						foreach($linkCode as $key=>$code){
 							echo $code;
