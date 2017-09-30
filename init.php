@@ -13,7 +13,7 @@
 	/*源网址读取页数*/
 	$page[0] = 1;
 	$page[1] = 1;
-	$page[2] = 1;
+	$page[2] = 2;
 	$page[3] = 3;
 
 	/*源网址*/
@@ -38,7 +38,7 @@
 	$sourceWebIndexFormat[0] = 'htm';
 	$sourceWebIndexFormat[1] = 'htm';
 	$sourceWebIndexFormat[2] = 'htm';
-	$sourceWebIndexFormat[2] = 'html';
+	$sourceWebIndexFormat[3] = 'html';
 
 	/*指定源网址截取部分*/
 	$tag[0] = 'div';

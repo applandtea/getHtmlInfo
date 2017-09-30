@@ -13,8 +13,8 @@
 	/*源网址读取页数*/
 	$page[0] = 1;
 	$page[1] = 1;
-	$page[2] = 1;
-	$page[3] = 1;
+	$page[2] = 2;
+	$page[3] = 3;
 
 	/*源网址*/
 	$sourceWeb[0] = 'http://www.czs.gov.cn/html/dtxx/tzgg/default.htm'; /*市政府门户*/
@@ -52,17 +52,17 @@
 	$attrValue[0] = 'list';
 	$attrValue[1] = 'xl';
 	$attrValue[2] = 'time';
-	$attrValue[3] = 'cx-list';
+	$attrValue[3] = 'cx-list-bx';
 	$cutSource[0] = "/<$tag[0]\s$attr[0]=\"$attrValue[0]\">(.*?)<\/$tag[0]>/is";  /*市政府门户*/
 	$cutSource[1] = "/<$tag[1].*?$attr[1]=\".*?$attrValue[1].*?\".*?>(.*?)<\/$tag[1]>/is";  /*市教育局  '/<td.*?class=\"jy2\".*?>(.*?)<\/td>/'  */
-	$cutSource[2] = "/<$tag[2].*?$attr[2]=\".*?$attrValue[2].*?\".*?>(.*?)<\/$tag[2]>/is";  /*市人社局*/
-	$cutSource[3] = "/<$tag[2].*?$attr[2]=\".*?$attrValue[2].*?\".*?>(.*?)<\/$tag[2]>/is";  /*市人社局*/
+	$cutSource[2] = "/<$tag[2].*?$attr[2]=\"$attrValue[2]\">(.*)<\/$tag[2]>/is";  /*市人社局*/
+	$cutSource[3] = "/<$tag[3].*?$attr[3]=\".*?$attrValue[3].*?\".*?>(.*?)]<\/$tag[3]>/is";  /*郴州人事考试网*/
 
 	/*关键词*/
 	$keyWord[0] = '普通话';
 	$keyWord[1] = '教师';
 	$keyWord[2] = '遴选';
-	$keyWord[3] = '招聘';
+	$keyWord[3] = '事业单位';
 
 	
 

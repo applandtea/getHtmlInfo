@@ -13,21 +13,27 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 			for($pageNumber=0;$pageNumber<$page[$sourceNumber];$pageNumber++){
 				if($pageNumber===0){
 					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$sourceWebIndexName[$sourceNumber].'.'.$sourceWebIndexFormat[$sourceNumber];
+					
 				}
+				
 				else{
 					$preg = "/[0-9]\b/";
-					$preg2 = "/(.*?)_?[0-9]?/";
+					$preg2 = "/(\w+)_?\d\b/";
 					preg_match_all($preg,$sourceWebIndexName[$sourceNumber],$num);
-					preg_match_all($preg2,$sourceWebIndexName[$sourceNumber],$num2);
-					//echo $num[0][0];
-					if($num[0][0] === 1){
-						$num[0][0] =+ $pageNumber;
-						$num2[1][0] =+ $num[0][0];
+					preg_match_all($preg2,$sourceWebIndexName[$sourceNumber],$num2);					
+					if($num[0][0] === '1'){
+						$num[0][0] = (int)$num[0][0] + $pageNumber;
+						//echo $num[0][0].'<br/>';
+						$num2[1][0] = $num2[1][0].$num[0][0];
+						//echo $pageNumber.'<br/>';
+						//echo $num2[1][0].'<br/>';
+						
 					}
 					else{
 						$num2[1][0] = $sourceWebIndexName[$sourceNumber].'_'.$pageNumber;
-					}
+					}					
 					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$num2[1][0].'.'.$sourceWebIndexFormat[$sourceNumber];
+					//echo $sourceWebTemp[$pageNumber].'<br/>';
 				}
 				selectLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 			}
