@@ -17,23 +17,17 @@ function readPage($webName,$sourceWeb,$sourceWebRoot,$sourceWebIndexName,$source
 				}
 				
 				else{
-					$preg = "/[0-9]\b/";
-					$preg2 = "/(\w+)_?\d\b/";
-					preg_match_all($preg,$sourceWebIndexName[$sourceNumber],$num);
-					preg_match_all($preg2,$sourceWebIndexName[$sourceNumber],$num2);					
-					if($num[0][0] === '1'){
-						$num[0][0] = (int)$num[0][0] + $pageNumber;
-						//echo $num[0][0].'<br/>';
-						$num2[1][0] = $num2[1][0].$num[0][0];
-						//echo $pageNumber.'<br/>';
-						//echo $num2[1][0].'<br/>';
-						
+					$preg = "/(\w+)_?(\d)\b/";
+					if(preg_match_all($preg,$sourceWebIndexName[$sourceNumber],$num)){
+						$indexStr = $num[1][0];
+						$number = $num[2][0];
+						$number = ((int)$number) + $pageNumber;
+						$indexStr = $indexStr.$number;						
 					}
 					else{
-						$num2[1][0] = $sourceWebIndexName[$sourceNumber].'_'.$pageNumber;
+						$indexStr = $sourceWebIndexName[$sourceNumber].'_'.$pageNumber;
 					}					
-					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$num2[1][0].'.'.$sourceWebIndexFormat[$sourceNumber];
-					//echo $sourceWebTemp[$pageNumber].'<br/>';
+					$sourceWebTemp[$pageNumber] = $sourceWebRoot[$sourceNumber].$indexStr.'.'.$sourceWebIndexFormat[$sourceNumber];
 				}
 				selectLink($webName[$sourceNumber],$sourceWebTemp[$pageNumber],$sourceWebRoot[$sourceNumber],$cutSource[$sourceNumber],$keyWord);
 			}
@@ -59,14 +53,15 @@ function selectLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 	preg_match_all($cutSource,$html,$result);
 
 	/*输出包含指定关键字的标题*/
+	
     for($j=0;$j<count($result[1]);$j++)
-    {
+    {		
 		$find = $keyWord;
 		$find = changeToUtf($find);	
 		/*匹配关键字*/
 		if(strpos($result[1][$j],$find)){	
 			/*获取链接文字内容*/
-			//print_r($result[1][$j]."<-");
+			//print_r($result[1][$j]);
 			$title =  get_tag_title($result[1][$j],'a');   
 			/*获取相对链接地址*/
 			$link = get_tag_link($result[1][$j],'a','href');
@@ -82,7 +77,8 @@ function selectLink($webName,$source,$sourceWebRoot,$cutSource,$keyWord){
 			//}
 		}	
     }
-	
+	global $linkCode;
+	//print_r($linkCode);
 }
 
 /*对筛选后的信息排序并输出*/
@@ -114,6 +110,7 @@ function changeToUtf($sourceString){
 function get_tag_title($result,$tag){
 	$regex = "/<".$tag.".*?>(.*?)<\/".$tag.">/is";
 	preg_match_all($regex,$result,$matches,PREG_PATTERN_ORDER);
+	//var_dump($matches[1]);
 	return $matches[1];
 }
 

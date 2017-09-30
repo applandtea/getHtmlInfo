@@ -27,7 +27,8 @@
 						global $linkCode;
 						global $counter;
 						//sortLink($linkCode,$counter);
-						krsort($linkCode);
+						//print_r($linkCode);
+						krsort($linkCode);						
 						foreach($linkCode as $key=>$code){
 							echo $code;
 						}
